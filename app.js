@@ -21,8 +21,10 @@ const formData = {
 	message: ''
 };
 
-// If using CronAlarm, call the start API
-db.queryAsync('show databases')
+const TIMER = 604800000; // 1 week
+
+setInterval(() => {
+  db.queryAsync('show databases')
 	.then((dbs) => {
 		let promises = dbs.map((db) => {
 			if (ignore.indexOf(db.Database) === -1) { // make sure database is not in the ignore list
@@ -80,3 +82,4 @@ db.queryAsync('show databases')
 		console.log('All done');
 		process.exit()
 	})
+}, TIMER)
